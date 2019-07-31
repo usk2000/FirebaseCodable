@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FirebaseCodable_Example' do
+  pod 'FirebaseCodable', :path => '../'
+
+  target 'FirebaseCodable_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
