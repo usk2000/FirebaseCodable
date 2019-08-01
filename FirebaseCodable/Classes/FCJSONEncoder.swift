@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FCJSONEncoder: JSONEncoder {
+open class FCJSONEncoder: JSONEncoder {
     
     convenience init(keyEncoding: KeyEncodingStrategy ,dateEncoding: DateEncodingStrategy) {
         self.init()

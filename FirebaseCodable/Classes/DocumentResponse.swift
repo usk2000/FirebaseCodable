@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct DocumentResponse<T> {
+public struct DocumentResponse<T> {
     let items: [T]
     let lastSnapshot: DocumentSnapshot?
 }

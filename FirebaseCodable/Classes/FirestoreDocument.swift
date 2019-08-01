@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-extension DocumentReference {
+public extension DocumentReference {
     
     func getDocument(completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
         

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FCJSONDecoder: JSONDecoder {
+open class FCJSONDecoder: JSONDecoder {
     
     convenience init(keyDecoding: KeyDecodingStrategy ,dateDecoding: DateDecodingStrategy) {
         self.init()

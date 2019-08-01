@@ -7,17 +7,17 @@
 
 import Foundation
 
-enum SnapshotDiff<T> {
+public enum SnapshotDiff<T> {
     case added([T])
     case modified([T])
     case removed([T])
 }
 
-struct FCSnapshotDiff<T> {
+public struct FCSnapshotDiff<T> {
     let diffs: [SnapshotDiff<T>]
 }
 
-extension FCSnapshotDiff where T: FirebaseCodable, T: Equatable {
+public extension FCSnapshotDiff where T: FirebaseCodable, T: Equatable {
     
     @discardableResult
     static func apply(diffs: FCSnapshotDiff<T>, value: inout [T]) -> Bool {

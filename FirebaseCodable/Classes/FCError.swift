@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum FCError: Error {
+public enum FCError: Error {
     case firebaseError(Error)
     case systemError(Error)
 }

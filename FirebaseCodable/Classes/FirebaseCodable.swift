@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol FirebaseCodable: Codable {
+public protocol FirebaseCodable: Codable {
     var id: String { get }
 }

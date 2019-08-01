@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import FirebaseCodable
+import FirebaseFirestore
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let firestore = Firestore.firestore()
+        
     }
 
     override func didReceiveMemoryWarning() {
