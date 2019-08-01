@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'Firebase Firestore & Database with Swift Codable'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+Firebase Firestore and Database extension with Swift Codable.
                        DESC
 
   s.homepage         = 'https://github.com/usk2000/FirebaseCodable'
