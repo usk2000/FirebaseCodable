@@ -30,5 +30,5 @@ Firebase Firestore and Database extension with Swift Codable.
   s.static_framework = true
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'Firebase/Firestore', '~> 5.20.0'
+  s.dependency 'Firebase/Firestore', '~> 6'
 end
