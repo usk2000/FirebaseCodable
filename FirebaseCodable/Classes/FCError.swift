@@ -8,6 +8,6 @@
 import Foundation
 
 public enum FCError: Error {
-    case firebaseError(Error)
-    case systemError(Error)
+    case firebaseError(Error)   //error for Firebase
+    case systemError(Error)     //error for System(i.e decode error, etc.)
 }

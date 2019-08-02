@@ -49,7 +49,7 @@ public extension Query {
         
     }
     
-    func getDocumentsResponse<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<DocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentsResponse<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocuments { snapshot, error in
             
@@ -67,7 +67,7 @@ public extension Query {
                 }
             })
             
-            let response = DocumentResponse<T>.init(items: result, lastSnapshot: snapshot!.documents.last)
+            let response = FCDocumentResponse<T>.init(items: result, lastSnapshot: snapshot!.documents.last)
             completion(.success(response))
             
         }

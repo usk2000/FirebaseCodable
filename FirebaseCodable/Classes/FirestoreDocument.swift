@@ -10,6 +10,9 @@ import FirebaseFirestore
 
 public extension DocumentReference {
     
+    /// get document
+    ///
+    /// - Parameter completion: result (success->DocumentSnapshot, fail->error)
     func getDocument(completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
         
         self.getDocument { (snapshot, error) in
@@ -25,6 +28,12 @@ public extension DocumentReference {
         
     }
     
+    /// get document and decode to object
+    ///
+    /// - Parameters:
+    ///   - type: Class to decode
+    ///   - decoder: decoder to use
+    ///   - completion: result
     func getDocumentAs<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocument { result in
@@ -52,6 +61,12 @@ public extension DocumentReference {
         }
     }
     
+    /// set(save) data
+    ///
+    /// - Parameters:
+    ///   - data: object to save
+    ///   - encoder: encoder to use
+    ///   - completion: result
     func setDataAs<T>(_ data: T, encoder: FCJSONEncoder, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
         
         do {
@@ -63,6 +78,11 @@ public extension DocumentReference {
         
     }
     
+    /// set data
+    ///
+    /// - Parameters:
+    ///   - documentData: map data
+    ///   - completion: result
     func setData(documentData: [String: Any], completion: @escaping (Result<Void, FCError>) -> Void) {
         
         self.setData(documentData) { error in
@@ -78,7 +98,7 @@ public extension DocumentReference {
         
     }
     
-    //パラメータを指定してアップデート
+    //
     func updateData(fields: [String: Any], completion: @escaping (Result<Void, FCError>) -> Void) {
         
         self.updateData(fields) { (error) in
