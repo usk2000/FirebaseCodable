@@ -22,7 +22,7 @@ pod 'FirebaseCodable'
 
 ## Author
 
-hasegawa-yusuke, hasegawa-yusuke@kayac.com
+Yuusuke Hasegawa, hasegawa.allround@gmail.com
 
 ## License
 
