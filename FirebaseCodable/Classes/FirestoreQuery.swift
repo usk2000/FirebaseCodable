@@ -25,6 +25,12 @@ public extension Query {
         
     }
     
+    /// get documents and convert to specified type
+    ///
+    /// - Parameters:
+    ///   - type: type to convert
+    ///   - decoder: converter
+    ///   - completion: result
     func getDocumentsAs<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocuments { snapshot, error in
@@ -49,9 +55,28 @@ public extension Query {
         
     }
     
-    func getDocumentsResponse<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
+    /// get documents, last snapshot and convert to specific type
+    ///
+    /// - Parameters:
+    ///   - type: type to convert
+    ///   - limit: limit of documents, if num of documents is equal to "limit", response has "lastSnapshot"
+    ///   - decoder: decoder
+    ///   - from: get data from this lastSnapshot
+    ///   - completion: result
+    func getDocumentsResponse<T>(_ type: T.Type,
+                                 limit: Int,
+                                 decoder: FCJSONDecoder,
+                                 from: DocumentSnapshot? = nil,
+                                 completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
         
-        self.getDocuments { snapshot, error in
+        let query: Query
+        if let from = from {
+            query = self.start(afterDocument: from)
+        } else {
+            query = self
+        }
+        
+        query.limit(to: limit).getDocuments { snapshot, error in
             
             if let error = error as NSError? {
                 completion(.failure(.firebaseError(error)))
@@ -67,7 +92,12 @@ public extension Query {
                 }
             })
             
-            let response = FCDocumentResponse<T>.init(items: result, lastSnapshot: snapshot!.documents.last)
+            let response: FCDocumentResponse<T>
+            if snapshot!.documents.count == limit {
+                response = FCDocumentResponse<T>(items: result, lastSnapshot: snapshot!.documents.last)
+            } else { //no more data
+                response = FCDocumentResponse<T>(items: result, lastSnapshot: nil)
+            }
             completion(.success(response))
             
         }

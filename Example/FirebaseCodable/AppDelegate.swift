@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         //initialize firebase
+                
         let options = FirebaseOptions(googleAppID: "your-app-id", gcmSenderID: "your-sender-id")
         FirebaseApp.configure(options: options)
         

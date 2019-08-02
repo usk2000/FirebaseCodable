@@ -9,6 +9,6 @@ import Foundation
 import FirebaseFirestore
 
 public struct FCDocumentResponse<T> {
-    let items: [T]  //decoded object list
-    let lastSnapshot: DocumentSnapshot? //last snapshot
+    public let items: [T]  //decoded object list
+    public let lastSnapshot: DocumentSnapshot? //last snapshot
 }
