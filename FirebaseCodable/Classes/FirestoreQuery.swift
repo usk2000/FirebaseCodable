@@ -104,8 +104,15 @@ public extension Query {
         
     }
     
+    /// observe update of objects
+    ///
+    /// - Parameters:
+    ///   - type: type of object
+    ///   - decoder: decoder
+    ///   - completion: result
+    /// - Returns: observer object
     @discardableResult
-    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
+    func addUpdateListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
         
         return addSnapshotListener({ snapshot, error in
             if let error = error {

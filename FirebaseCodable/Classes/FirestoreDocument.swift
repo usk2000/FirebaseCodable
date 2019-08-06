@@ -98,7 +98,12 @@ public extension DocumentReference {
         
     }
     
-    //
+
+    /// update dta for specified fields
+    ///
+    /// - Parameters:
+    ///   - fields: map of data
+    ///   - completion: result
     func updateData(fields: [String: Any], completion: @escaping (Result<Void, FCError>) -> Void) {
         
         self.updateData(fields) { (error) in
@@ -114,8 +119,15 @@ public extension DocumentReference {
         
     }
     
+    /// observe update of document
+    ///
+    /// - Parameters:
+    ///   - type: type of data
+    ///   - decoder: decoder
+    ///   - completion: result
+    /// - Returns: observer object
     @discardableResult
-    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
+    func addUpdateListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
         
         return self.addSnapshotListener { snapshot, error in
             
@@ -143,6 +155,9 @@ public extension DocumentReference {
         }
     }
     
+    /// delete document
+    ///
+    /// - Parameter completion: result
     func deleteDocument(completion: @escaping ((Result<Void, FCError>) -> Void)) {
         
         delete { error in

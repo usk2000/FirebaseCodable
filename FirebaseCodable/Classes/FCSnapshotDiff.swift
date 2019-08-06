@@ -14,7 +14,7 @@ public enum SnapshotDiff<T> {
 }
 
 public struct FCSnapshotDiff<T> {
-    let diffs: [SnapshotDiff<T>]
+    public let diffs: [SnapshotDiff<T>]
 }
 
 public extension FCSnapshotDiff where T: FirebaseCodable, T: Equatable {

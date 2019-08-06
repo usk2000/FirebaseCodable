@@ -19,14 +19,17 @@ class ViewController: UIViewController {
     private var canLoadMore: Bool {
         return lastSnapshot == nil
     }
+    private var listener: ListenerRegistration?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //get data
+        //query
         let query = Firestore.firestore()
             .collection("messages")
             .order(by: "date", descending: true)
+        
+        //get data with limit
         query.getDocumentsResponse(Message.self, limit: 2, decoder: decoder, from: nil) { [unowned self] result in
             switch result {
             case .success(let response):
@@ -40,6 +43,41 @@ class ViewController: UIViewController {
                 debugPrint(error)
             }
         }
+        
+        //get data
+        query.getDocumentsAs(Message.self, decoder: decoder) { result in
+            switch result {
+            case .success(let messages):
+                debugPrint("num of message : \(messages.count)")
+                
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
+        
+        //observe data update
+        listener = query.limit(to: 2).addUpdateListenerAs(Message.self, decoder: decoder, completion: { result in
+            switch result {
+            case .success(let response):
+                response.diffs.forEach { diff in
+                    switch diff {
+                    case .added(let added):
+                        debugPrint("added : \(added.count)")
+                        
+                    case .modified(let modified):
+                        debugPrint("modified : \(modified.count)")
+                        
+                    case .removed(let removed):
+                        debugPrint("removed : \(removed.count)")
+                        
+                    }
+                }
+                
+            case .failure(let error):
+                debugPrint(error)
+                
+            }
+        })
         
     }
 
