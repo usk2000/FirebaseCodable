@@ -9,19 +9,19 @@ import Foundation
 
 open class FCJSONEncoder: JSONEncoder {
     
-    convenience init(keyEncoding: KeyEncodingStrategy ,dateEncoding: DateEncodingStrategy) {
+    public convenience init(keyEncoding: KeyEncodingStrategy ,dateEncoding: DateEncodingStrategy) {
         self.init()
         self.keyEncodingStrategy = keyEncoding
         self.dateEncodingStrategy = dateEncoding
     }
     
-    func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable {
+    public func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         return json as? [String: Any] ?? [:]
     }
     
-    func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirebaseCodable {
+    public func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirebaseCodable {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         if var result = json as? [String: Any] {
@@ -32,7 +32,7 @@ open class FCJSONEncoder: JSONEncoder {
         }
     }
     
-    func encodeToJsonArray<T>(_ value: T) throws -> [[String: Any]] where T: Codable {
+    public func encodeToJsonArray<T>(_ value: T) throws -> [[String: Any]] where T: Codable {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         return json as? [[String: Any]] ?? [[:]]

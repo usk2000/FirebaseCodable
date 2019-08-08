@@ -13,6 +13,7 @@ import FirebaseFirestore
 class ViewController: UIViewController {
 
     private let decoder: FCJSONDecoder = .init(keyDecoding: .convertFromSnakeCase, dateDecoding: .millisecondsSince1970)
+    private let encoder: FCJSONEncoder = .init(keyEncoding: .convertToSnakeCase, dateEncoding: .millisecondsSince1970)
     
     private var messages: [Message] = []
     private var lastSnapshot: DocumentSnapshot?
@@ -78,6 +79,60 @@ class ViewController: UIViewController {
                 
             }
         })
+        
+        //get single document
+        let ref = Firestore.firestore().collection("messages").document("some_message_id")
+        ref.getDocumentAs(Message.self, decoder: decoder) { result in
+            switch result {
+            case .success(let response):
+                if let message = response {
+                    debugPrint(message)
+                } else {
+                    debugPrint("not found")
+                }
+                
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
+        
+        //save data
+        let message = Message(id: "ignored", text: "bra-bra", date: Date())
+        let newRef = Firestore.firestore().collection("messages").document() //new document with auto-generated ID
+        newRef.setDataAs(message, encoder: encoder) { result in
+            switch result {
+            case .success:
+                debugPrint("success to save")
+                
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
+        
+        //update data
+        let fields: [String: Any] = [
+            "text": "new text, bra-bra"
+        ]
+        ref.updateData(fields: fields) { result in
+            switch result {
+            case .success:
+                debugPrint("success to update")
+                
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
+        
+        //delete data
+        ref.deleteDocument { result in
+            switch result {
+            case .success:
+                debugPrint("success to delete")
+                
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
         
     }
 
