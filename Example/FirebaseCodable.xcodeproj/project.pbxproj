@@ -16,6 +16,7 @@
 		6FC09D1D75715B693313E2E5 /* Pods_FirebaseCodable_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A922FB885D45A549EC7C4F4B /* Pods_FirebaseCodable_Example.framework */; };
 		871795C7FD80DEBA6B00654C /* Pods_FirebaseCodable_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA4F83DE5F59E3211B4A95 /* Pods_FirebaseCodable_Tests.framework */; };
 		B901044F22F4190800629FBD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901044E22F4190800629FBD /* Message.swift */; };
+		B99F238D22F93BB9003894C8 /* messages.json in Resources */ = {isa = PBXBuildFile; fileRef = B99F238C22F93BB9003894C8 /* messages.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		A922FB885D45A549EC7C4F4B /* Pods_FirebaseCodable_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirebaseCodable_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FA4F83DE5F59E3211B4A95 /* Pods_FirebaseCodable_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FirebaseCodable_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901044E22F4190800629FBD /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		B99F238C22F93BB9003894C8 /* messages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = messages.json; sourceTree = "<group>"; };
 		C17B8A898766FD8877D2F8ED /* Pods-FirebaseCodable_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseCodable_Example.debug.xcconfig"; path = "Target Support Files/Pods-FirebaseCodable_Example/Pods-FirebaseCodable_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		ED4603BA57A7A044CF67242B /* FirebaseCodable.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FirebaseCodable.podspec; path = ../FirebaseCodable.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				B99F238B22F93BA0003894C8 /* File */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -149,6 +152,14 @@
 				A858FD3EA0BFE79DAAD8D9C8 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		B99F238B22F93BA0003894C8 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				B99F238C22F93BB9003894C8 /* messages.json */,
+			);
+			name = File;
 			sourceTree = "<group>";
 		};
 		BA9BD54E8A1DB5C2D79D73E5 /* Pods */ = {
@@ -250,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				B99F238D22F93BB9003894C8 /* messages.json in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
