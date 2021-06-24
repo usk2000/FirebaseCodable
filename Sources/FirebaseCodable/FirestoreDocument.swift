@@ -6,7 +6,9 @@
 //
 
 import Foundation
+#if canImport(FirebaseFirestore)
 import FirebaseFirestore
+#endif
 
 public extension DocumentReference {
     
@@ -34,13 +36,13 @@ public extension DocumentReference {
     ///   - type: Class to decode
     ///   - decoder: decoder to use
     ///   - completion: result
-    func getDocumentAs<T>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentAs<T>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
         
         self.getDocument { result in
            
             switch result {
             case .success(let snapshot):
-                if snapshot.exists {
+                if snapshot.exits {
                     
                     do {
                         let data = snapshot.data()!
@@ -67,7 +69,7 @@ public extension DocumentReference {
     ///   - data: object to save
     ///   - encoder: encoder to use
     ///   - completion: result
-    func setDataAs<T>(_ data: T, encoder: FCJSONEncoder, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
+    func setDataAs<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
         
         do {
             let json = try encoder.encodeToJson(data)
@@ -127,7 +129,7 @@ public extension DocumentReference {
     ///   - completion: result
     /// - Returns: observer object
     @discardableResult
-    func addUpdateListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJSONDecoder, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
+    func addUpdateListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
         
         return self.addSnapshotListener { snapshot, error in
             
@@ -135,8 +137,7 @@ public extension DocumentReference {
                 completion(.failure(.firebaseError(error)))
             } else {
                 let snapshot = snapshot!
-                
-                if snapshot.exists {
+                if snapshot.exits {
                     
                     do {
                         let data = snapshot.data()!
