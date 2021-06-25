@@ -9,6 +9,8 @@ import Foundation
 
 #if !canImport(FirebaseFirestore)
 
+#warning("You should install Firestore")
+
 public class DocumentReference: NSObject {
     
     var path: String { return "" }
