@@ -6,9 +6,7 @@
 //
 
 import Foundation
-#if canImport(FirebaseFirestore)
 import FirebaseFirestore
-#endif
 
 public extension DocumentReference {
     
@@ -42,7 +40,7 @@ public extension DocumentReference {
            
             switch result {
             case .success(let snapshot):
-                if snapshot.exits {
+                if snapshot.exists {
                     
                     do {
                         let data = snapshot.data()!
@@ -137,7 +135,7 @@ public extension DocumentReference {
                 completion(.failure(.firebaseError(error)))
             } else {
                 let snapshot = snapshot!
-                if snapshot.exits {
+                if snapshot.exists {
                     
                     do {
                         let data = snapshot.data()!

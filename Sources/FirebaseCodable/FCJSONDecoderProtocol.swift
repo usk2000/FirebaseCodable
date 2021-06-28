@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 public protocol FCJsonDecoderProtocol: AnyObject {
     

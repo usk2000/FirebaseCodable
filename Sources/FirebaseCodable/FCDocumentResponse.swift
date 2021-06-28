@@ -6,9 +6,7 @@
 //
 
 import Foundation
-#if canImport(FirebaseFirestore)
 import FirebaseFirestore
-#endif
 
 public struct FCDocumentResponse<T> {
     public let items: [T]  //decoded object list

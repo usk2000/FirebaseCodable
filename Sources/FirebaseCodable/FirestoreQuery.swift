@@ -6,9 +6,7 @@
 //
 
 import Foundation
-#if canImport(FirebaseFirestore)
 import FirebaseFirestore
-#endif
 
 public extension Query {
     
