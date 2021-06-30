@@ -25,7 +25,7 @@ public extension Query {
         
     }
         
-    func getDocumentsAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentsAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirestoreCodable {
         
         self.getDocuments(source: source) { (snapshot, error) in
             
@@ -53,7 +53,7 @@ public extension Query {
         
     }
     
-    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirestoreCodable {
         
         self.getDocuments(source: source) { snapshot, error in
             
@@ -83,7 +83,7 @@ public extension Query {
         
     }
     
-    func getDocumentsSync<T: FirebaseCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol) throws -> [T] {
+    func getDocumentsSync<T: FirestoreCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol) throws -> [T] {
         
         var documents: [T] = []
         var error: Error?
@@ -141,7 +141,7 @@ public extension Query {
     }
     
     @discardableResult
-    func addSnapshotListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
+    func addSnapshotListenerAs<T: FirestoreCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
         
         return addSnapshotListener({ snapshot, error in
             if let error = error {
@@ -174,13 +174,8 @@ public extension Query {
                         return nil
                     }
                 })
-                
-                var diffs: [SnapshotDiff<T>] = []
-                if !removed.isEmpty { diffs.append(.removed(removed))}
-                if !modified.isEmpty { diffs.append(.modified(modified))}
-                if !added.isEmpty { diffs.append(.added(added)) }
-
-                completion(.success(FCSnapshotDiff<T>(diffs: diffs)))
+                                
+                completion(.success(FCSnapshotDiff<T>(added: added, modified: modified, removed: removed)))
             }
         })
         

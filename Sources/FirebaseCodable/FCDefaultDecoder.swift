@@ -7,9 +7,9 @@
 
 import Foundation
 
-class FCDefaultDecoder: JSONDecoder, FCJsonDecoderProtocol {
+public class FCDefaultDecoder: JSONDecoder, FCJsonDecoderProtocol {
     
-    override init() {
+    public override init() {
         super.init()
         self.keyDecodingStrategy = .convertFromSnakeCase
     }

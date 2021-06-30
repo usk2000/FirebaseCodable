@@ -10,12 +10,12 @@ import Foundation
 public protocol FCJsonEncoderProtocol: AnyObject {
     
     func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable
-    func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirebaseCodable
+    func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirestoreCodable
     func encodeToJsonArray<T>(_ value: T) throws -> [[String: Any]] where T: Codable
     
 }
 
-extension FCJsonEncoderProtocol where Self: JSONEncoder {
+public extension FCJsonEncoderProtocol where Self: JSONEncoder {
     
     /// Codableに準拠したオブジェクトをJSONに変化する
     /// - Parameter value: オブジェクト
@@ -28,7 +28,7 @@ extension FCJsonEncoderProtocol where Self: JSONEncoder {
     
     /// FirebaseオブジェクトをJSONに変換する。idキーは削除する
     /// - Parameter value: オブジェクト
-    func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirebaseCodable {
+    func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirestoreCodable {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         //Log.verbose(json)

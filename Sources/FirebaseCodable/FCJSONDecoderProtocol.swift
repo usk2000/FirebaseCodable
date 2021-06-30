@@ -11,11 +11,11 @@ import FirebaseFirestore
 public protocol FCJsonDecoderProtocol: AnyObject {
     
     func decode<T>(_ type: T.Type, json: Any) throws -> T where T: Decodable
-    func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirebaseCodable
+    func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirestoreCodable
     
 }
 
-extension FCJsonDecoderProtocol where Self: JSONDecoder {
+public extension FCJsonDecoderProtocol where Self: JSONDecoder {
     
     /// JSONオブジェクトをCodableに準拠したオブジェクトに変換する
     /// - Parameters:
@@ -39,7 +39,7 @@ extension FCJsonDecoderProtocol where Self: JSONDecoder {
     ///   - type: タイプ
     ///   - json: JSON
     ///   - id: Document ID
-    func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirebaseCodable {
+    func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirestoreCodable {
         var input = json
         input["id"] = id
         convertTimestampToJson(&input)

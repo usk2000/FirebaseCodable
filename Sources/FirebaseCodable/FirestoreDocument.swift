@@ -34,7 +34,7 @@ public extension DocumentReference {
     ///   - type: Class to decode
     ///   - decoder: decoder to use
     ///   - completion: result
-    func getDocumentAs<T>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirebaseCodable {
+    func getDocumentAs<T>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirestoreCodable {
         
         self.getDocument { result in
            
@@ -67,7 +67,7 @@ public extension DocumentReference {
     ///   - data: object to save
     ///   - encoder: encoder to use
     ///   - completion: result
-    func setDataAs<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirebaseCodable {
+    func setDataAs<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirestoreCodable {
         
         do {
             let json = try encoder.encodeToJson(data)
@@ -127,7 +127,7 @@ public extension DocumentReference {
     ///   - completion: result
     /// - Returns: observer object
     @discardableResult
-    func addUpdateListenerAs<T: FirebaseCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
+    func addUpdateListenerAs<T: FirestoreCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) -> ListenerRegistration {
         
         return self.addSnapshotListener { snapshot, error in
             
