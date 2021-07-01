@@ -7,7 +7,10 @@
 
 import Foundation
 
+/// Error
 public enum FCError: Error {
-    case firebaseError(Error)   //error for Firebase
-    case systemError(Error)     //error for System(i.e decode error, etc.)
+    /// error for Firebase
+    case firebaseError(Error)
+    ///error for System(i.e decode error, etc.)
+    case systemError(Error)
 }

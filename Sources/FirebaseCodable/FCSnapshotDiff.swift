@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// SnapshotDiff
 public struct FCSnapshotDiff<T> {
     public let added: [T]
     public let modified: [T]
@@ -15,6 +16,11 @@ public struct FCSnapshotDiff<T> {
 
 public extension FCSnapshotDiff where T: FirestoreCodable, T: Equatable {
     
+    /// apply
+    /// - Parameters:
+    ///   - diffs: diffs
+    ///   - value: value
+    /// - Returns: bool
     @discardableResult
     static func apply(diffs: FCSnapshotDiff<T>, value: inout [T]) -> Bool {
         var modified = false
