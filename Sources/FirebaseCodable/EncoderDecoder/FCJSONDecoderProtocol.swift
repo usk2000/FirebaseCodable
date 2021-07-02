@@ -17,11 +17,11 @@ public protocol FCJsonDecoderProtocol: AnyObject {
 
 public extension FCJsonDecoderProtocol where Self: JSONDecoder {
     
-    /// JSONオブジェクトをCodableに準拠したオブジェクトに変換する
+    /// Decode JSON object to Type which confirms Decodable
     /// - Parameters:
-    ///   - type: タイプ
-    ///   - json: JSON
-    func decode<T>(_ type: T.Type, json: Any) throws -> T where T: Decodable {
+    ///   - type: Type
+    ///   - json: JSON object
+    func decode<T: Decodable>(_ type: T.Type, json: Any) throws -> T {
         
         var input = json
         
@@ -34,17 +34,16 @@ public extension FCJsonDecoderProtocol where Self: JSONDecoder {
         return try self.decode(T.self, from: data)
     }
     
-    /// Firebaseから取得したJSONオブジェクトを変換する
+    /// Decode JSON object to Type which confirms FirestoreCodable
     /// - Parameters:
-    ///   - type: タイプ
-    ///   - json: JSON
+    ///   - type: Type
+    ///   - json: JSON object
     ///   - id: Document ID
-    func decode<T>(_ type: T.Type, json: [String: Any], id: String) throws -> T where T: FirestoreCodable {
+    func decode<T: FirestoreCodable>(_ type: T.Type, json: [String: Any], id: String) throws -> T {
         var input = json
         input["id"] = id
         convertTimestampToJson(&input)
         let data = try JSONSerialization.data(withJSONObject: input, options: [])
-        //Log.debug(String.init(data: data, encoding: .utf8) ?? "empty")
         return try self.decode(T.self, from: data)
     }
     
@@ -52,7 +51,8 @@ public extension FCJsonDecoderProtocol where Self: JSONDecoder {
 
 private extension FCJsonDecoderProtocol {
     
-    /// トップレベルのみTimestampを変換
+    /// Convert top-level Timestamp to JSON
+    /// - Parameter json: JSON object
     func convertTimestampToJson(_ json: inout [String: Any]) {
         
         json.forEach { key, value in

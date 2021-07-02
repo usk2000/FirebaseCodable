@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Default JSONEncoder used in Package
 public class FCDefaultEncoder: JSONEncoder, FCJsonEncoderProtocol {
     
     public override init() {

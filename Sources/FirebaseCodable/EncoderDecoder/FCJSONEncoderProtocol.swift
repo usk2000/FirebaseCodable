@@ -17,21 +17,23 @@ public protocol FCJsonEncoderProtocol: AnyObject {
 
 public extension FCJsonEncoderProtocol where Self: JSONEncoder {
     
-    /// Codableに準拠したオブジェクトをJSONに変化する
-    /// - Parameter value: オブジェクト
-    func encodeIntoJson<T>(_ value: T) throws -> [String: Any] where T: Codable {
+    /// Encode  object  which confirms Encodable  to JSON object
+    /// - Parameter value: Encodable object
+    /// - Throws: encode error
+    /// - Returns: JSON object
+    func encodeIntoJson<T: Encodable>(_ value: T) throws -> [String: Any] {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
-        //Log.verbose(json)
         return json as? [String: Any] ?? [:]
     }
     
-    /// FirebaseオブジェクトをJSONに変換する。idキーは削除する
-    /// - Parameter value: オブジェクト
+    /// Encode  object  which confirms FirestoreCodable  to JSON object
+    /// - Parameter value: FirebaseCodable object
+    /// - Throws: encode error
+    /// - Returns: JSON object
     func encodeToJson<T>(_ value: T) throws -> [String: Any] where T: FirestoreCodable {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
-        //Log.verbose(json)
         if var result = json as? [String: Any] {
             result["id"] = nil
             return result
@@ -40,12 +42,11 @@ public extension FCJsonEncoderProtocol where Self: JSONEncoder {
         }
     }
     
-    /// Codableに準拠したオブジェクト配列をJSONに変化する
-    /// - Parameter value: オブジェクト
-    func encodeToJsonArray<T>(_ value: T) throws -> [[String: Any]] where T: Codable {
+    /// Encode array  object  which confirms FirestoreCodable  to JSON object
+    /// - Parameter value: array of Encodable object
+    func encodeToJsonArray<T: Encodable>(_ value: T) throws -> [[String: Any]] {
         let data = try self.encode(value)
         let json = try JSONSerialization.jsonObject(with: data, options: [])
-        //Log.verbose(json)
         return json as? [[String: Any]] ?? [[:]]
     }
     
