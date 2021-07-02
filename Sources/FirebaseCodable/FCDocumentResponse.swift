@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-/// DocumentResponse
+/// Response with objects and last snapshot
 public struct FCDocumentResponse<T> {
     /// decoded object list
     public let items: [T]

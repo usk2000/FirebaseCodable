@@ -10,6 +10,10 @@ import FirebaseFirestore
 
 public extension Query {
     
+    /// get documents
+    /// - Parameters:
+    ///   - source: source
+    ///   - completion: result
     func getDocuments(source: FirestoreSource, completion: @escaping (Result<QuerySnapshot, FCError>) -> Void) {
         
         self.getDocuments(source: source) { (snapshot, error) in
@@ -24,8 +28,14 @@ public extension Query {
         }
         
     }
-        
-    func getDocumentsAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) where T: FirestoreCodable {
+    
+    /// get documents and decode
+    /// - Parameters:
+    ///   - type: type to decode
+    ///   - source: source
+    ///   - decoder: decoder
+    ///   - completion: result
+    func getDocumentsAs<T: FirestoreCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<[T], FCError>) -> Void) {
         
         self.getDocuments(source: source) { (snapshot, error) in
             
@@ -40,7 +50,9 @@ public extension Query {
                 do {
                     return try decoder.decode(type, json: child.data(), id: child.documentID)
                 } catch let error {
+                    #if DEBUG
                     debugPrint(error)
+                    #endif
                     return nil
                 }
             })
@@ -53,7 +65,13 @@ public extension Query {
         
     }
     
-    func getDocumentResponseAs<T>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) where T: FirestoreCodable {
+    /// get response of documents and decode
+    /// - Parameters:
+    ///   - type: type to decode
+    ///   - source: source
+    ///   - decoder: decoder
+    ///   - completion: result
+    func getDocumentResponseAs<T: FirestoreCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCDocumentResponse<T>, FCError>) -> Void) {
         
         self.getDocuments(source: source) { snapshot, error in
             
@@ -68,8 +86,10 @@ public extension Query {
                 do {
                     return try decoder.decode(type, json: child.data(), id: child.documentID)
                 } catch let error {
+                    #if DEBUG
                     debugPrint(child.reference.path)
                     debugPrint(error)
+                    #endif
                     return nil
                 }
             })
@@ -83,6 +103,13 @@ public extension Query {
         
     }
     
+    /// get documents synchronously
+    /// - Parameters:
+    ///   - type: type to decode
+    ///   - source: source
+    ///   - decoder: decoder
+    /// - Throws: error
+    /// - Returns: decoded objects
     func getDocumentsSync<T: FirestoreCodable>(_ type: T.Type, source: FirestoreSource, decoder: FCJsonDecoderProtocol) throws -> [T] {
         
         var documents: [T] = []
@@ -97,7 +124,9 @@ public extension Query {
                     do {
                         return try decoder.decode(type, json: child.data(), id: child.documentID)
                     } catch let error {
+                        #if DEBUG
                         debugPrint(error)
+                        #endif
                         return nil
                     }
                 })
@@ -116,6 +145,10 @@ public extension Query {
         return documents
     }
     
+    /// get documents asynchronously
+    /// - Parameter source: source
+    /// - Throws: error
+    /// - Returns: snapshot
     func getDocumentsSync(source: FirestoreSource) throws -> QuerySnapshot {
         var snapshot: QuerySnapshot?
         var error: Error?
@@ -140,6 +173,13 @@ public extension Query {
         return snapshot!
     }
     
+    /// observe update of documents
+    /// 
+    /// - Parameters:
+    ///   - type: type to decode
+    ///   - decoder: decoder
+    ///   - completion: result
+    /// - Returns: ListenerRegistration
     @discardableResult
     func addSnapshotListenerAs<T: FirestoreCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<FCSnapshotDiff<T>, FCError>) -> Void) -> ListenerRegistration {
         
@@ -154,7 +194,9 @@ public extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
+                        #if DEBUG
                         debugPrint(error)
+                        #endif
                         return nil
                     }
                 })
@@ -162,7 +204,9 @@ public extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
+                        #if DEBUG
                         debugPrint(error)
+                        #endif
                         return nil
                     }
                 })
@@ -170,7 +214,9 @@ public extension Query {
                     do {
                         return try decoder.decode(type, json: change.document.data(), id: change.document.documentID)
                     } catch let error {
+                        #if DEBUG
                         debugPrint(error)
+                        #endif
                         return nil
                     }
                 })

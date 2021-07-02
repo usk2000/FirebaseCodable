@@ -16,10 +16,10 @@ public struct FCSnapshotDiff<T> {
 
 public extension FCSnapshotDiff where T: FirestoreCodable, T: Equatable {
     
-    /// apply
+    /// apply diff
     /// - Parameters:
     ///   - diffs: diffs
-    ///   - value: value
+    ///   - value: value to apply
     /// - Returns: bool
     @discardableResult
     static func apply(diffs: FCSnapshotDiff<T>, value: inout [T]) -> Bool {

@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Codable protocol for Firestore
 public protocol FirestoreCodable: Codable {
     var id: String { get }
 }

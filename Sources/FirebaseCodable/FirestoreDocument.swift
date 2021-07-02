@@ -12,7 +12,7 @@ public extension DocumentReference {
     
     /// get document
     ///
-    /// - Parameter completion: result (success->DocumentSnapshot, fail->error)
+    /// - Parameter completion: result
     func getDocument(completion: @escaping (Result<DocumentSnapshot, FCError>) -> Void) {
         
         self.getDocument { (snapshot, error) in
@@ -31,10 +31,10 @@ public extension DocumentReference {
     /// get document and decode to object
     ///
     /// - Parameters:
-    ///   - type: Class to decode
-    ///   - decoder: decoder to use
+    ///   - type: Type to decode
+    ///   - decoder: decoder
     ///   - completion: result
-    func getDocumentAs<T>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) where T: FirestoreCodable {
+    func getDocumentAs<T: FirestoreCodable>(_ type: T.Type, decoder: FCJsonDecoderProtocol, completion: @escaping (Result<T?, FCError>) -> Void) {
         
         self.getDocument { result in
            
@@ -67,7 +67,7 @@ public extension DocumentReference {
     ///   - data: object to save
     ///   - encoder: encoder to use
     ///   - completion: result
-    func setDataAs<T>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) where T: FirestoreCodable {
+    func setDataAs<T: FirestoreCodable>(_ data: T, encoder: FCJsonEncoderProtocol, completion: @escaping (Result<Void, FCError>) -> Void) {
         
         do {
             let json = try encoder.encodeToJson(data)
